@@ -1,216 +1,192 @@
-<h1 align="center"><em>Telegram bot template</em></h1>
+# Telegram Bot Template
 
-<h3 align="center">
-  Best way to create a scalable telegram bot with analytics
-</h3>
+## Масштабируемый Telegram бот с аналитикой и админ-панелью
 
-<p align="center">
-  <a href="https://github.com/donBarbos/telegram-bot-template/tags"><img alt="GitHub tag (latest SemVer)" src="https://img.shields.io/github/v/tag/donBarbos/telegram-bot-template"></a>
-  <a href="https://github.com/donBarbos/telegram-bot-template/actions/workflows/linters.yml"><img src="https://img.shields.io/github/actions/workflow/status/donBarbos/telegram-bot-template/linters.yml?label=linters" alt="Linters Status"></a>
-  <a href="https://github.com/donBarbos/telegram-bot-template/actions/workflows/docker-image.yml"><img src="https://img.shields.io/github/actions/workflow/status/donBarbos/telegram-bot-template/docker-image.yml?label=docker%20image" alt="Docker Build Status"></a>
-  <a href="https://www.python.org/downloads"><img src="https://img.shields.io/badge/python-3.10%2B-blue" alt="Python"></a>
-  <a href="https://github.com/donBarbos/telegram-bot-template/blob/main/LICENSE"><img src="https://img.shields.io/github/license/donbarbos/telegram-bot-template?color=blue" alt="License"></a>
-  <a href="https://github.com/astral-sh/ruff"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json" alt="Code style"></a>
-  <a href="https://github.com/astral-sh/uv"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json" alt="Package manager"></a>
-<p>
+Проект представляет собой полнофункциональный шаблон для создания Telegram ботов с встроенной системой аналитики, мониторинга и администрирования.
 
-## ✨ Features
+## ✨ Основной функционал
 
--   [x] Admin Panel based on [`Flask-Admin-Dashboard`](https://github.com/jonalxh/Flask-Admin-Dashboard/) ([`Flask-Admin`](https://flask-admin.readthedocs.io/) + [`AdminLTE`](https://adminlte.io/) = ❤️ )
--   [x] Product Analytics System: using [`Amplitude`](https://amplitude.com/) or [`Posthog`](https://posthog.com/) or [`Google Analytics`](https://analytics.google.com)
--   [x] Performance Monitoring System: using [`Prometheus`](https://prometheus.io/) and [`Grafana`](https://grafana.com/)
--   [x] Tracking System: using [`Sentry`](https://sentry.io/)
--   [x] Seamless use of `Docker` and `Docker Compose`
--   [x] Export all users in `.csv` (or `.xlsx`, `.json`, `yaml` from admin panel)
--   [x] Configured CI pipeline from git hooks to github actions
--   [x] [`SQLAlchemy V2`](https://pypi.org/project/SQLAlchemy/) is used to communicate with the database
--   [x] Database Migrations with [`Alembic`](https://pypi.org/project/alembic/)
--   [x] Ability to cache using decorator
--   [x] Convenient validation using [`Pydantic V2`](https://pypi.org/project/pydantic/)
--   [x] Internationalization (i18n) using GNU gettex and [`Babel`](https://pypi.org/project/Babel/)
+- **Админ-панель** - веб-интерфейс для управления ботом на основе Flask-Admin с современным дизайном
+- **Система аналитики** - интеграция с популярными сервисами аналитики (Amplitude, PostHog, Google Analytics)
+- **Мониторинг производительности** - система мониторинга на базе Prometheus и Grafana
+- **Система отслеживания ошибок** - интеграция с Sentry для отслеживания и исправления ошибок
+- **Docker контейнеризация** - полная поддержка Docker и Docker Compose для простого развертывания
+- **Экспорт данных** - возможность экспорта пользователей в различных форматах (CSV, XLSX, JSON, YAML)
+- **База данных** - использование SQLAlchemy V2 для работы с PostgreSQL
+- **Миграции БД** - автоматические миграции базы данных через Alembic
+- **Кэширование** - система кэширования с использованием Redis
+- **Валидация данных** - удобная валидация с помощью Pydantic V2
+- **Интернационализация** - поддержка множественных языков через Babel
 
-## 🚀 How to Use
+## 🚀 Запуск проекта
 
-### 🐳 Running in Docker _(recommended method)_
+### 🐳 Запуск в Docker (рекомендуемый способ)
 
--   configure environment variables in `.env` file
-
--   start services
+1. Настройте переменные окружения в файле `.env`
+2. Запустите все сервисы:
 
     ```bash
     docker compose up -d --build
     ```
 
-### 💻 Running on Local Machine
+### 💻 Запуск на локальной машине
 
--   set environment and install dependencies using [uv](https://docs.astral.sh/uv/ "python package manager") (you can find branch with Poetry [here](https://github.com/donBarbos/telegram-bot-template/tree/poetry-archive))
+1. Установите зависимости с помощью uv:
 
     ```bash
     uv sync --frozen --all-groups
     ```
 
--   start the necessary services (at least your database and redis)
+2. Запустите необходимые сервисы (база данных и Redis)
 
--   configure environment variables in `.env` file
+3. Настройте переменные окружения в файле `.env`
 
--   start telegram bot
+4. Запустите Telegram бота:
 
     ```bash
     uv run python -m bot
     ```
 
--   start admin panel
+5. Запустите админ-панель:
 
     ```bash
     uv run gunicorn -c admin/gunicorn_conf.py
     ```
 
--   make migrations
+6. Выполните миграции базы данных:
 
     ```bash
     uv run alembic upgrade head
     ```
 
-## 🌍 Environment variables
+## 🌍 Переменные окружения
 
-to launch the bot you only need a token bot, database and redis settings, everything else can be left out
+Для запуска бота необходимы только токен бота, настройки базы данных и Redis. Остальные параметры можно оставить по умолчанию.
 
-| name                     | description                                                                                 |
-| ------------------------ | ------------------------------------------------------------------------------------------- |
-| `BOT_TOKEN`              | Telegram bot API token                                                                      |
-| `RATE_LIMIT`             | Maximum number of requests allowed per minute for rate limiting                             |
-| `DEBUG`                  | Enable or disable debugging mode (e.g., `True` or `False`)                                  |
-| `USE_WEBHOOK`            | Flag to indicate whether the bot should use a webhook for updates (e.g., `True` or `False`) |
-| `WEBHOOK_BASE_URL`       | Base URL for the webhook                                                                    |
-| `WEBHOOK_PATH`           | Path to receive updates from Telegram                                                       |
-| `WEBHOOK_SECRET`         | Secret key for securing the webhook communication                                           |
-| `WEBHOOK_HOST`           | Hostname or IP address for the main application                                             |
-| `WEBHOOK_PORT`           | Port number for the main application                                                        |
-| `ADMIN_HOST`             | Hostname or IP address for the admin panel                                                  |
-| `ADMIN_PORT`             | Port number for the admin panel                                                             |
-| `DEFAULT_ADMIN_EMAIL`    | Default email for the admin user                                                            |
-| `DEFAULT_ADMIN_PASSWORD` | Default password for the admin user                                                         |
-| `SECURITY_PASSWORD_HASH` | Hashing algorithm for user passwords (e.g., `bcrypt`)                                       |
-| `SECURITY_PASSWORD_SALT` | Salt value for user password hashing                                                        |
-| `DB_HOST`                | Hostname or IP address of the PostgreSQL database                                           |
-| `DB_PORT`                | Port number for the PostgreSQL database                                                     |
-| `DB_USER`                | Username for authenticating with the PostgreSQL database                                    |
-| `DB_PASS`                | Password for authenticating with the PostgreSQL database                                    |
-| `DB_NAME`                | Name of the PostgreSQL database                                                             |
-| `REDIS_HOST`             | Hostname or IP address of the Redis database                                                |
-| `REDIS_PORT`             | Port number for the Redis database                                                          |
-| `REDIS_PASS`             | Password for authenticating with the Redis database                                         |
-| `SENTRY_DSN`             | Sentry DSN (Data Source Name) for error tracking                                            |
-| `AMPLITUDE_API_KEY`      | API key for Amplitude analytics                                                             |
-| `POSTHOG_API_KEY`        | API key for PostHog analytics                                                               |
-| `PROMETHEUS_PORT`        | Port number for the Prometheus monitoring system                                            |
-| `GRAFANA_PORT`           | Port number for the Grafana monitoring and visualization platform                           |
-| `GRAFANA_ADMIN_USER`     | Admin username for accessing Grafana                                                        |
-| `GRAFANA_ADMIN_PASSWORD` | Admin password for accessing Grafana                                                        |
+| Переменная                | Описание                                                                                    |
+| ------------------------- | ------------------------------------------------------------------------------------------- |
+| `BOT_TOKEN`               | API токен Telegram бота                                                                     |
+| `RATE_LIMIT`              | Максимальное количество запросов в минуту для ограничения скорости                         |
+| `DEBUG`                   | Включить или отключить режим отладки (True или False)                                      |
+| `USE_WEBHOOK`             | Использовать webhook для получения обновлений (True или False)                             |
+| `WEBHOOK_BASE_URL`        | Базовый URL для webhook                                                                     |
+| `WEBHOOK_PATH`            | Путь для получения обновлений от Telegram                                                   |
+| `WEBHOOK_SECRET`          | Секретный ключ для защиты webhook соединения                                               |
+| `WEBHOOK_HOST`            | Имя хоста или IP адрес основного приложения                                                 |
+| `WEBHOOK_PORT`            | Порт основного приложения                                                                   |
+| `ADMIN_HOST`              | Имя хоста или IP адрес админ-панели                                                         |
+| `ADMIN_PORT`              | Порт админ-панели                                                                           |
+| `DEFAULT_ADMIN_EMAIL`     | Email администратора по умолчанию                                                           |
+| `DEFAULT_ADMIN_PASSWORD`  | Пароль администратора по умолчанию                                                          |
+| `SECURITY_PASSWORD_HASH`  | Алгоритм хеширования паролей (например, bcrypt)                                             |
+| `SECURITY_PASSWORD_SALT`  | Соль для хеширования паролей                                                                |
+| `DB_HOST`                 | Имя хоста или IP адрес PostgreSQL базы данных                                               |
+| `DB_PORT`                 | Порт PostgreSQL базы данных                                                                 |
+| `DB_USER`                 | Имя пользователя для подключения к PostgreSQL                                               |
+| `DB_PASS`                 | Пароль для подключения к PostgreSQL                                                         |
+| `DB_NAME`                 | Имя PostgreSQL базы данных                                                                  |
+| `REDIS_HOST`              | Имя хоста или IP адрес Redis базы данных                                                    |
+| `REDIS_PORT`              | Порт Redis базы данных                                                                      |
+| `REDIS_PASS`              | Пароль для подключения к Redis                                                              |
+| `SENTRY_DSN`              | DSN для отслеживания ошибок через Sentry                                                    |
+| `AMPLITUDE_API_KEY`       | API ключ для аналитики Amplitude                                                            |
+| `POSTHOG_API_KEY`         | API ключ для аналитики PostHog                                                              |
+| `PROMETHEUS_PORT`         | Порт системы мониторинга Prometheus                                                         |
+| `GRAFANA_PORT`            | Порт платформы мониторинга Grafana                                                          |
+| `GRAFANA_ADMIN_USER`      | Имя пользователя администратора Grafana                                                     |
+| `GRAFANA_ADMIN_PASSWORD`  | Пароль администратора Grafana                                                               |
 
-## 📂 Project Folder Structure
+## 📂 Структура проекта
 
 ```bash
 .
-├── admin # Source code for admin panel
-│   ├── __init__.py
-│   ├── app.py # Main application module for the admin panel
-│   ├── config.py # Configuration module for the admin panel
-│   ├── Dockerfile # Dockerfile for admin panel
-│   ├── gunicorn_conf.py # Gunicorn configuration file for serving admin panel
-│   ├── static # Folder for static assets
-│   │   ├── css/
-│   │   ├── fonts/
-│   │   ├── img/
-│   │   ├── js/
-│   │   └── plugins/
-│   ├── templates # HTML templates for the admin panel
-│   │   ├── admin/
-│   │   ├── index.html
-│   │   ├── my_master.html
-│   │   └── security/
-│   └── views # Custom View modules for handling web requests
-│       ├── __init__.py
-│       └── users.py
+├── admin/                    # Исходный код админ-панели
+│   ├── __init__.py
+│   ├── app.py               # Основной модуль приложения админ-панели
+│   ├── config.py            # Модуль конфигурации админ-панели
+│   ├── Dockerfile           # Dockerfile для админ-панели
+│   ├── gunicorn_conf.py     # Конфигурация Gunicorn для админ-панели
+│   ├── static/              # Статические ресурсы (CSS, JS, изображения)
+│   ├── templates/           # HTML шаблоны для админ-панели
+│   └── views/               # Модули представлений для веб-запросов
 │
-├── bot # Source code for Telegram Bot
-│   ├── __init__.py
-│   ├── __main__.py # Main entry point to launch the bot
-│   ├── analytics/ # Interaction with analytics services (e.g., Amplitude or Google Analytics)
-│   ├── cache/ # Logic for using Redis cache
-│   ├── core/ # Settings for application and other core components
-│   ├── database/ # Database functions and SQLAlchemy Models
-│   ├── filters/ # Filters for processing incoming messages or updates
-│   ├── handlers/ # Handlers for processing user commands and interactions
-│   ├── keyboards # Modules for creating custom keyboards
-│   │   ├── default_commands.py # Default command keyboards
-│   │   ├── __init__.py
-│   │   ├── inline/ # Inline keyboards
-│   │   └── reply/ # Reply keyboards
-│   ├── locales/ # Localization files for supporting multiple languages
-│   ├── middlewares/ # Middleware modules for processing incoming updates
-│   ├── services/ # Business logic for application
-│   └── utils/ # Utility functions and helper modules
+├── bot/                     # Исходный код Telegram бота
+│   ├── __init__.py
+│   ├── __main__.py          # Точка входа для запуска бота
+│   ├── analytics/           # Интеграция с сервисами аналитики
+│   ├── cache/               # Логика работы с Redis кэшем
+│   ├── core/                # Настройки приложения и основные компоненты
+│   ├── database/            # Функции БД и модели SQLAlchemy
+│   ├── filters/             # Фильтры для обработки входящих сообщений
+│   ├── handlers/            # Обработчики команд и взаимодействий пользователей
+│   ├── keyboards/           # Модули создания клавиатур
+│   ├── locales/             # Файлы локализации для поддержки языков
+│   ├── middlewares/         # Middleware модули для обработки обновлений
+│   ├── services/            # Бизнес-логика приложения
+│   └── utils/               # Утилиты и вспомогательные модули
 │
-├── migrations # Database Migrations managed by Alembic
-│   ├── env.py # Environment setup for Alembic
-│   ├── __init__.py
-│   ├── README
-│   ├── script.py.mako # Script template for generating migrations
-│   └── versions/ # Folder containing individual migration scripts
+├── migrations/              # Миграции базы данных (Alembic)
+│   ├── env.py               # Настройка окружения для Alembic
+│   ├── script.py.mako       # Шаблон скрипта для генерации миграций
+│   └── versions/            # Папка с отдельными скриптами миграций
 │
-├── configs # Config folder for Monitoring (Prometheus, Node-exporter and Grafana)
-│   ├── grafana # Configuration files for Grafana
-│   │   └── datasource.yml
-│   └── prometheus # Configuration files for Prometheus
-│       └── prometheus.yml
+├── configs/                 # Конфигурации мониторинга
+│   ├── grafana/             # Конфигурационные файлы Grafana
+│   └── prometheus/          # Конфигурационные файлы Prometheus
 │
-├── scripts/ # Sripts folder
-├── Makefile # List of commands for standard
-├── alembic.ini # Configuration file for migrations
-├── docker-compose.yml # Docker Compose configuration file for orchestrating containers
-├── Dockerfile # Dockerfile for Telegram Bot
-├── LICENSE.md # License file for the project
-├── uv.lock # Lock file for UV dependency management
-├── pyproject.toml # Configuration file for Python projects, including build tools, dependencies, and metadata
-└── README.md # Documentation
+├── scripts/                 # Вспомогательные скрипты
+├── Makefile                 # Список команд для стандартных операций
+├── alembic.ini              # Конфигурационный файл миграций
+├── docker-compose.yml       # Конфигурация Docker Compose
+├── Dockerfile               # Dockerfile для Telegram бота
+├── pyproject.toml           # Конфигурация Python проекта
+└── README.md                # Документация
 ```
 
-## 🔧 Tech Stack
+## 🔧 Технологический стек
 
--   `sqlalchemy` — object-relational mapping (ORM) library that provides a set of high-level API for interacting with relational databases
--   `asyncpg` — asynchronous PostgreSQL database client library
--   `aiogram` — asynchronous framework for Telegram Bot API
--   `flask-admin` — simple and extensible administrative interface framework
--   `loguru` — third party library for logging in Python
--   `uv` — development workflow
--   `docker` — to automate deployment
--   `postgres` — powerful, open source object-relational database system
--   `pgbouncer` — connection pooler for PostgreSQL database
--   `redis` — in-memory data structure store used as a cache and FSM
--   `prometheus` — time series database for collecting metrics from various systems
--   `grafana` — visualization and analysis from various sources, including Prometheus
+- **SQLAlchemy** — ORM библиотека для работы с реляционными базами данных
+- **AsyncPG** — асинхронный клиент для PostgreSQL
+- **Aiogram** — асинхронный фреймворк для Telegram Bot API
+- **Flask-Admin** — простой и расширяемый фреймворк административного интерфейса
+- **Loguru** — библиотека для логирования в Python
+- **UV** — современный менеджер пакетов Python
+- **Docker** — контейнеризация для автоматизации развертывания
+- **PostgreSQL** — мощная объектно-реляционная система управления базами данных
+- **PgBouncer** — пулер соединений для PostgreSQL
+- **Redis** — хранилище данных в памяти для кэширования и FSM
+- **Prometheus** — система мониторинга и база данных временных рядов
+- **Grafana** — платформа для визуализации и анализа данных
 
-## ⭐ Star History
+## 🚀 Быстрый старт
 
-[![Star History Chart](https://api.star-history.com/svg?repos=donBarbos/telegram-bot-template&type=Date)](https://star-history.com/#donBarbos/telegram-bot-template&Date)
+1. **Клонируйте репозиторий:**
+   ```bash
+   git clone <repository-url>
+   cd telegram-bot-template
+   ```
 
-## 👷 Contributing
+2. **Настройте переменные окружения:**
+   ```bash
+   cp .env.example .env
+   # Отредактируйте .env файл с вашими настройками
+   ```
 
-First off, thanks for taking the time to contribute! Contributions are what makes the open-source community such an amazing place to learn, inspire, and create. Any contributions you make will benefit everybody else and are greatly appreciated.
+3. **Запустите проект в Docker:**
+   ```bash
+   docker compose up -d --build
+   ```
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement". Don't forget to give the project a star! Thanks again!
+4. **Откройте админ-панель:**
+   - URL: http://localhost:5050
+   - Логин: admin@example.com
+   - Пароль: admin
 
-1. `Fork` this repository
-2. Create a `branch`
-3. `Commit` your changes
-4. `Push` your `commits` to the `branch`
-5. Submit a `pull request`
+5. **Откройте Grafana для мониторинга:**
+   - URL: http://localhost:3000
+   - Логин: admin
+   - Пароль: admin
 
-## 📝 License
+## 📝 Лицензия
 
-Distributed under the MIT license. See [`LICENSE`](./LICENSE.md) for more information.
-
-## 📢 Contact
-
-[donbarbos](https://github.com/donBarbos): donbarbos@proton.me
+Распространяется под лицензией MIT. См. файл LICENSE для получения дополнительной информации.
