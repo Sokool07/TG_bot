@@ -78,7 +78,7 @@ to launch the bot you only need a token bot, database and redis settings, everyt
 | name                     | description                                                                                 |
 | ------------------------ | ------------------------------------------------------------------------------------------- |
 | `BOT_TOKEN`              | Telegram bot API token                                                                      |
-| `RATE_LIMIT`             | Maximum number of requests allowed per minute for rate limiting                             |
+| `RATE_LIMIT`             | Minimum interval in seconds between requests for throttling middleware                      |
 | `DEBUG`                  | Enable or disable debugging mode (e.g., `True` or `False`)                                  |
 | `USE_WEBHOOK`            | Flag to indicate whether the bot should use a webhook for updates (e.g., `True` or `False`) |
 | `WEBHOOK_BASE_URL`       | Base URL for the webhook                                                                    |
