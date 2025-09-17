@@ -77,7 +77,6 @@ class DummyUserModel:
         "is_admin",
         "is_suspicious",
         "is_block",
-        "is_premium",
     ]
     __table__ = types.SimpleNamespace(columns=[DummyColumn(name) for name in column_names])
 
@@ -101,7 +100,6 @@ def test_convert_users_to_csv_writes_column_names() -> None:
         is_admin=False,
         is_suspicious=False,
         is_block=False,
-        is_premium=True,
     )
 
     csv_file = asyncio.run(convert_users_to_csv([user]))

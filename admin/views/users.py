@@ -13,7 +13,7 @@ class UserView(ModelView):
     export_types = ["csv", "xlsx", "json", "yaml"]
 
     column_searchable_list = ["id", "username", "first_name", "last_name"]
-    column_filters = ["is_admin", "is_suspicious", "is_block", "is_premium", "created_at"]
+    column_filters = ["is_admin", "is_suspicious", "is_block", "created_at"]
     column_list = [
         "id",
         "username",
@@ -23,7 +23,6 @@ class UserView(ModelView):
         "is_admin",
         "is_suspicious",
         "is_block",
-        "is_premium",
         "created_at",
     ]
     column_default_sort = ("created_at", True)

@@ -43,14 +43,6 @@ msgstr "Support"
 msgid "back button"
 msgstr "🔙 Back"
 
-#: bot/keyboards/inline/menu.py:9
-msgid "wallet button"
-msgstr "👛 Wallet"
-
-#: bot/keyboards/inline/menu.py:10
-msgid "premium button"
-msgstr "🆙 Get PREMIUM"
-
 #: bot/keyboards/inline/menu.py:11
 msgid "info button"
 msgstr "Info"

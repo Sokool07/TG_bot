@@ -22,15 +22,12 @@ async def add_user(
     last_name: str | None = user.last_name
     username: str | None = user.username
     language_code: str | None = user.language_code
-    is_premium: bool = user.is_premium or False
-
     new_user = UserModel(
         id=user_id,
         first_name=first_name,
         last_name=last_name,
         username=username,
         language_code=language_code,
-        is_premium=is_premium,
         referrer=referrer,
     )
 
