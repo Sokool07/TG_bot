@@ -14,7 +14,7 @@ DEBUG: bool = str(os.getenv("DEBUG")).lower() == "true"
 
 BABEL_DEFAULT_LOCALE = os.getenv("BABEL_DEFAULT_LOCALE") or "en"
 
-# Create dummy secrey key so we can use sessions
+# Create dummy secret key so we can use sessions
 SECRET_KEY: str = os.getenv("SECRET_KEY") or "x%#3&%giwv8f0+%r946en7z&d@9*rc$sl0qoql56xr%bh^w2mj"
 
 

@@ -72,7 +72,7 @@ class CacheSettings(EnvBaseSettings):
     @property
     def redis_url(self) -> str:
         if self.REDIS_PASS:
-            return f"redis://{self.REDIS_PASS}@{self.REDIS_HOST}:{self.REDIS_PORT}/0"
+            return f"redis://:{self.REDIS_PASS}@{self.REDIS_HOST}:{self.REDIS_PORT}/0"
         return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}/0"
 
 

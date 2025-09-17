@@ -10,12 +10,14 @@ from bot.database.models import UserModel
 
 async def convert_users_to_csv(users: list[UserModel]) -> BufferedInputFile:
     """Export all users in csv file."""
-    columns = UserModel.__table__.columns
+    columns = list(UserModel.__table__.columns)
+    headers = [column.name for column in columns]
     data = [[getattr(user, column.name) for column in columns] for user in users]
 
     s = io.StringIO()
-    csv.writer(s).writerow(columns)
-    csv.writer(s).writerows(data)
+    writer = csv.writer(s)
+    writer.writerow(headers)
+    writer.writerows(data)
     s.seek(0)
 
     return BufferedInputFile(
