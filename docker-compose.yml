@@ -186,6 +186,7 @@ services:
       - ./configs/grafana/datasources:/etc/grafana/provisioning/datasources
       - ./configs/grafana/dashboards:/etc/grafana/provisioning/dashboards
       - ./configs/grafana/node-exporter.json:/var/lib/grafana/dashboards/node-exporter.json
+      - ./configs/grafana/tgbot-overview.json:/var/lib/grafana/dashboards/tgbot-overview.json
       - grafana-data:/var/lib/grafana
     user: "0"
 

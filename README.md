@@ -59,42 +59,60 @@
     uv run alembic upgrade head
     ```
 
-## 🌍 Переменные окружения
+## 🌍 Environment variables
 
-Для запуска бота необходимы только токен бота, настройки базы данных и Redis. Остальные параметры можно оставить по умолчанию.
+to launch the bot you only need a token bot, database and redis settings, everything else can be left out
 
-| Переменная                | Описание                                                                                    |
-| ------------------------- | ------------------------------------------------------------------------------------------- |
-| `BOT_TOKEN`               | API токен Telegram бота                                                                     |
-| `RATE_LIMIT`              | Максимальное количество запросов в минуту для ограничения скорости                         |
-| `DEBUG`                   | Включить или отключить режим отладки (True или False)                                      |
-| `USE_WEBHOOK`             | Использовать webhook для получения обновлений (True или False)                             |
-| `WEBHOOK_BASE_URL`        | Базовый URL для webhook                                                                     |
-| `WEBHOOK_PATH`            | Путь для получения обновлений от Telegram                                                   |
-| `WEBHOOK_SECRET`          | Секретный ключ для защиты webhook соединения                                               |
-| `WEBHOOK_HOST`            | Имя хоста или IP адрес основного приложения                                                 |
-| `WEBHOOK_PORT`            | Порт основного приложения                                                                   |
-| `ADMIN_HOST`              | Имя хоста или IP адрес админ-панели                                                         |
-| `ADMIN_PORT`              | Порт админ-панели                                                                           |
-| `DEFAULT_ADMIN_EMAIL`     | Email администратора по умолчанию                                                           |
-| `DEFAULT_ADMIN_PASSWORD`  | Пароль администратора по умолчанию                                                          |
-| `SECURITY_PASSWORD_HASH`  | Алгоритм хеширования паролей (например, bcrypt)                                             |
-| `SECURITY_PASSWORD_SALT`  | Соль для хеширования паролей                                                                |
-| `DB_HOST`                 | Имя хоста или IP адрес PostgreSQL базы данных                                               |
-| `DB_PORT`                 | Порт PostgreSQL базы данных                                                                 |
-| `DB_USER`                 | Имя пользователя для подключения к PostgreSQL                                               |
-| `DB_PASS`                 | Пароль для подключения к PostgreSQL                                                         |
-| `DB_NAME`                 | Имя PostgreSQL базы данных                                                                  |
-| `REDIS_HOST`              | Имя хоста или IP адрес Redis базы данных                                                    |
-| `REDIS_PORT`              | Порт Redis базы данных                                                                      |
-| `REDIS_PASS`              | Пароль для подключения к Redis                                                              |
-| `SENTRY_DSN`              | DSN для отслеживания ошибок через Sentry                                                    |
-| `AMPLITUDE_API_KEY`       | API ключ для аналитики Amplitude                                                            |
-| `POSTHOG_API_KEY`         | API ключ для аналитики PostHog                                                              |
-| `PROMETHEUS_PORT`         | Порт системы мониторинга Prometheus                                                         |
-| `GRAFANA_PORT`            | Порт платформы мониторинга Grafana                                                          |
-| `GRAFANA_ADMIN_USER`      | Имя пользователя администратора Grafana                                                     |
-| `GRAFANA_ADMIN_PASSWORD`  | Пароль администратора Grafana                                                               |
+| name                     | description                                                                                 |
+| ------------------------ | ------------------------------------------------------------------------------------------- |
+| `BOT_TOKEN`              | Telegram bot API token                                                                      |
+| `RATE_LIMIT`             | Minimum interval in seconds between requests for throttling middleware                      |
+| `DEBUG`                  | Enable or disable debugging mode (e.g., `True` or `False`)                                  |
+| `USE_WEBHOOK`            | Flag to indicate whether the bot should use a webhook for updates (e.g., `True` or `False`) |
+| `WEBHOOK_BASE_URL`       | Base URL for the webhook                                                                    |
+| `WEBHOOK_PATH`           | Path to receive updates from Telegram                                                       |
+| `WEBHOOK_SECRET`         | Secret key for securing the webhook communication                                           |
+| `WEBHOOK_HOST`           | Hostname or IP address for the main application                                             |
+| `WEBHOOK_PORT`           | Port number for the main application                                                        |
+| `ADMIN_HOST`             | Hostname or IP address for the admin panel                                                  |
+| `ADMIN_PORT`             | Port number for the admin panel                                                             |
+| `DEFAULT_ADMIN_EMAIL`    | Default email for the admin user                                                            |
+| `DEFAULT_ADMIN_PASSWORD` | Default password for the admin user                                                         |
+| `SECURITY_PASSWORD_HASH` | Hashing algorithm for user passwords (e.g., `bcrypt`)                                       |
+| `SECURITY_PASSWORD_SALT` | Salt value for user password hashing                                                        |
+| `DB_HOST`                | Hostname or IP address of the PostgreSQL database                                           |
+| `DB_PORT`                | Port number for the PostgreSQL database                                                     |
+| `DB_USER`                | Username for authenticating with the PostgreSQL database                                    |
+| `DB_PASS`                | Password for authenticating with the PostgreSQL database                                    |
+| `DB_NAME`                | Name of the PostgreSQL database                                                             |
+| `REDIS_HOST`             | Hostname or IP address of the Redis database                                                |
+| `REDIS_PORT`             | Port number for the Redis database                                                          |
+| `REDIS_PASS`             | Password for authenticating with the Redis database                                         |
+| `SENTRY_DSN`             | Sentry DSN (Data Source Name) for error tracking                                            |
+| `AMPLITUDE_API_KEY`      | API key for Amplitude analytics                                                             |
+| `POSTHOG_API_KEY`        | API key for PostHog analytics                                                               |
+| `PROMETHEUS_PORT`        | Port number for the Prometheus monitoring system                                            |
+| `GRAFANA_PORT`           | Port number for the Grafana monitoring and visualization platform                           |
+| `GRAFANA_ADMIN_USER`     | Admin username for accessing Grafana                                                        |
+| `GRAFANA_ADMIN_PASSWORD` | Admin password for accessing Grafana                                                        |
+
+## 📊 Grafana dashboards
+
+The monitoring stack ships with pre-provisioned dashboards that are loaded automatically when you start the `grafana` service
+from `docker-compose.yml`:
+
+-   **Node Exporter Full** — reuses the community dashboard for host metrics and is useful for spotting resource starvation
+    on the machine that runs the bot.
+-   **Telegram Bot Overview** — a custom dashboard that visualizes Prometheus metrics exported by the bot:
+    -   request rate grouped by HTTP method (`tgbot_requests`)
+    -   response throughput broken down by status code (`tgbot_responses`)
+    -   latency quantiles based on the request duration histogram (`tgbot_request_duration_bucket`)
+    -   exception rate grouped by exception type (`tgbot_exceptions`)
+
+Once the monitoring stack is running (for example, via `docker compose up grafana prometheus node-exporter`), open
+`http://localhost:${GRAFANA_PORT}/d/tgbot-overview/telegram-bot-overview` and log in with the credentials from
+`GRAFANA_ADMIN_USER` / `GRAFANA_ADMIN_PASSWORD`. Data refreshes every 30 seconds by
+default, so the panels begin to populate as soon as Prometheus scrapes `/metrics` from the bot container.
 
 ## 📂 Структура проекта
 

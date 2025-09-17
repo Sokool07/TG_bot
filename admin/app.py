@@ -19,6 +19,7 @@ from wtforms import PasswordField
 
 from admin.views.users import UserView as AppUserView
 from bot.database.models import UserModel as AppUserModel
+from sqlalchemy.exc import SQLAlchemyError
 
 if TYPE_CHECKING:
     from werkzeug.wrappers.response import Response
@@ -115,20 +116,29 @@ class AdminView(RoleView):
     column_details_exclude_list = column_exclude_list
     column_filters = column_editable_list
     form_overrides = {"password": PasswordField}
+    form_args = {"password": {"validators": [], "flags": {}}}
 
 
-# Flask views
-def get_orders_count() -> int:
-    return 0
+def _handle_db_error(error: SQLAlchemyError) -> None:
+    app.logger.error("Failed to query user statistics: %s", error)
+    db.session.rollback()
 
 
 def get_user_count() -> int:
-    return db.session.query(AppUserModel).count()
+    try:
+        return db.session.query(AppUserModel).count()
+    except SQLAlchemyError as error:
+        _handle_db_error(error)
+        return 0
 
 
 def get_new_user_count(days_before: int = 1) -> int:
     period_start = datetime.now(timezone.utc) - timedelta(days=days_before)
-    return db.session.query(AppUserModel).filter(AppUserModel.created_at >= period_start).count()
+    try:
+        return db.session.query(AppUserModel).filter(AppUserModel.created_at >= period_start).count()
+    except SQLAlchemyError as error:
+        _handle_db_error(error)
+        return 0
 
 
 class CustomAdminIndexView(AdminIndexView):
@@ -136,14 +146,11 @@ class CustomAdminIndexView(AdminIndexView):
     def index(self) -> str:
         days_before: int = 1
         period_start = datetime.now(timezone.utc) - timedelta(days=days_before)
-        order_count = get_orders_count()
         user_count = get_user_count()
-        new_user_count = get_new_user_count(days_before)
         new_user_count = get_new_user_count(days_before)
 
         return self.render(
             "admin/index.html",
-            order_count=order_count,
             user_count=user_count,
             new_user_count=new_user_count,
             period_start=period_start,
