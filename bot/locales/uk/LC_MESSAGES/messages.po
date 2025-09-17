@@ -48,10 +48,92 @@ msgstr ""
 msgid "info button"
 msgstr ""
 
+#: bot/keyboards/inline/menu.py:12 bot/handlers/fortune.py:12
+msgid "fortune button"
+msgstr ""
+
 #: bot/middlewares/auth.py:41
 msgid "first message"
 msgstr ""
 
+#: bot/handlers/fortune.py:16
+msgid "fortune description"
+msgstr ""
+#: bot/handlers/onboarding.py:24
+msgid "onboarding_welcome"
+msgstr ""
+
+#: bot/handlers/onboarding.py:25
+msgid "onboarding_ask_login"
+msgstr ""
+
+#: bot/handlers/onboarding.py:32
+msgid "onboarding_cancelled"
+msgstr ""
+
+#: bot/handlers/onboarding.py:39
+msgid "onboarding_invalid_login"
+msgstr ""
+
+#: bot/handlers/onboarding.py:44 bot/handlers/onboarding.py:62 bot/handlers/onboarding.py:94
+msgid "onboarding_service_error"
+msgstr ""
+
+#: bot/handlers/onboarding.py:58
+msgid "onboarding_code_sent"
+msgstr ""
+
+#: bot/handlers/onboarding.py:60
+msgid "onboarding_ask_code"
+msgstr ""
+
+#: bot/handlers/onboarding.py:67 bot/handlers/onboarding.py:99
+msgid "onboarding_token_invalid"
+msgstr ""
+
+#: bot/handlers/onboarding.py:75
+msgid "onboarding_subscribe_button"
+msgstr ""
+
+#: bot/handlers/onboarding.py:76
+msgid "onboarding_check_button"
+msgstr ""
+
+#: bot/handlers/onboarding.py:79
+msgid "onboarding_token_confirmed"
+msgstr ""
+
+#: bot/handlers/onboarding.py:80
+msgid "onboarding_subscribe_prompt"
+msgstr ""
+
+#: bot/handlers/onboarding.py:91
+msgid "onboarding_throttled"
+msgstr ""
+
+#: bot/handlers/onboarding.py:95
+msgid "onboarding_not_subscribed"
+msgstr ""
+
+#: bot/handlers/onboarding.py:99
+msgid "onboarding_granting"
+msgstr ""
+
+#: bot/handlers/onboarding.py:112
+msgid "onboarding_bonus_success"
+msgstr ""
+
+#: bot/handlers/onboarding.py:115
+msgid "onboarding_requirements_failed"
+msgstr ""
+
+#: bot/handlers/onboarding.py:116
+msgid "onboarding_bonus_failure"
+msgstr ""
+
+#: bot/handlers/onboarding.py:122
+msgid "onboarding_fallback"
+msgstr ""
 #~ msgid ""
 #~ "👋 <b>Добро пожаловать в бот.</b>\n"
 #~ "<i>Это сообщение появляет только один раз</i>\n"

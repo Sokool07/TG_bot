@@ -41,9 +41,9 @@ class AnalyticsService(metaclass=SingletonMeta):
             handler: Callable[[Message | CallbackQuery, dict[str, Any]], Awaitable[_Func]],
         ) -> Callable[..., Awaitable[_Func]]:
             @wraps(handler)
-            async def wrapper(update: Message | CallbackQuery, *args: Any) -> Any:
+            async def wrapper(update: Message | CallbackQuery, *args: Any, **kwargs: Any) -> Any:
                 if not self.logger:
-                    return await handler(update, *args)
+                    return await handler(update, *args, **kwargs)
 
                 if (isinstance(update, Message | CallbackQuery)) and update.from_user:
                     user_id = update.from_user.id
@@ -88,7 +88,7 @@ class AnalyticsService(metaclass=SingletonMeta):
                     ),
                 )
                 try:
-                    result = await handler(update, *args)
+                    result = await handler(update, *args, **kwargs)
                 except Exception as e:
                     await self._track_error(user_id, str(e))
                     raise

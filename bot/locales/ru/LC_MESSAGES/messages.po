@@ -48,12 +48,96 @@ msgstr "🔙 Вернуться назад"
 msgid "info button"
 msgstr "Info"
 
+#: bot/keyboards/inline/menu.py:12 bot/handlers/fortune.py:12
+msgid "fortune button"
+msgstr "🎡 Открыть колесо фортуны"
+
 #: bot/middlewares/auth.py:41
 msgid "first message"
 msgstr ""
 "👋 <b>Добро пожаловать в бот.</b>\n"
 "\n"
 "Чтобы начать пользоваться ботом можете начать с /menu"
+
+#: bot/handlers/fortune.py:16
+msgid "fortune description"
+msgstr "Запусти колесо фортуны в браузере и попробуй выиграть моментальные призы."
+
+#: bot/handlers/onboarding.py:24
+msgid "onboarding_welcome"
+msgstr "Привяжи аккаунт казино и подпишись на канал, чтобы получить <b>30 фриспинов</b>."
+
+#: bot/handlers/onboarding.py:25
+msgid "onboarding_ask_login"
+msgstr "Отправь имя пользователя или email, который указан в аккаунте казино."
+
+#: bot/handlers/onboarding.py:32
+msgid "onboarding_cancelled"
+msgstr "Хорошо, онбординг отменён."
+
+#: bot/handlers/onboarding.py:39
+msgid "onboarding_invalid_login"
+msgstr "Нужно имя пользователя или email (минимум 3 символа). Попробуй ещё раз или нажми /cancel."
+
+#: bot/handlers/onboarding.py:44 bot/handlers/onboarding.py:62 bot/handlers/onboarding.py:94
+msgid "onboarding_service_error"
+msgstr "Не удалось связаться с сервисом казино. Попробуй позже."
+
+#: bot/handlers/onboarding.py:58
+msgid "onboarding_code_sent"
+msgstr "Мы отправили код подтверждения на {email}. Введи его здесь в течение {ttl} минут."
+
+#: bot/handlers/onboarding.py:60
+msgid "onboarding_ask_code"
+msgstr "Напиши код подтверждения из письма."
+
+#: bot/handlers/onboarding.py:67 bot/handlers/onboarding.py:99
+msgid "onboarding_token_invalid"
+msgstr "Не удалось подтвердить код. Проверь письмо и попробуй снова."
+
+#: bot/handlers/onboarding.py:75
+msgid "onboarding_subscribe_button"
+msgstr "📢 Подписаться"
+
+#: bot/handlers/onboarding.py:76
+msgid "onboarding_check_button"
+msgstr "✅ Проверить подписку"
+
+#: bot/handlers/onboarding.py:79
+msgid "onboarding_token_confirmed"
+msgstr "Отлично! Аккаунт казино подтверждён."
+
+#: bot/handlers/onboarding.py:80
+msgid "onboarding_subscribe_prompt"
+msgstr "Теперь подпишись на наш канал, чтобы я проверил выполнение условий."
+
+#: bot/handlers/onboarding.py:91
+msgid "onboarding_throttled"
+msgstr "Подожди ещё {seconds} сек. перед следующей проверкой."
+
+#: bot/handlers/onboarding.py:95
+msgid "onboarding_not_subscribed"
+msgstr "Похоже, подписка ещё не оформлена. Нажми кнопку выше и попробуй снова."
+
+#: bot/handlers/onboarding.py:99
+msgid "onboarding_granting"
+msgstr "Проверяем аккаунт и начисляем 30 фриспинов..."
+
+#: bot/handlers/onboarding.py:112
+msgid "onboarding_bonus_success"
+msgstr "Готово! 30 фриспинов зачислены. Удачи!"
+
+#: bot/handlers/onboarding.py:115
+msgid "onboarding_requirements_failed"
+msgstr "Условия бонуса ещё не выполнены. Нужен хотя бы один депозит."
+
+#: bot/handlers/onboarding.py:116
+msgid "onboarding_bonus_failure"
+msgstr "Не удалось начислить бонус. Мы проверим и свяжемся при необходимости."
+
+#: bot/handlers/onboarding.py:122
+msgid "onboarding_fallback"
+msgstr "Я пока не понимаю. Используй /start, чтобы начать онбординг."
 
 #~ msgid ""
 #~ "👋 <b>Добро пожаловать в бот.</b>\n"

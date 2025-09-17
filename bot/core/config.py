@@ -35,8 +35,17 @@ class WebhookSettings(EnvBaseSettings):
 
 class BotSettings(WebhookSettings):
     BOT_TOKEN: str
+    CHANNEL_ID: str
+    CUSTOMERIO_API_KEY: str
+    GBL_BONUS_API_URL: str
+    GBL_BONUS_API_KEY: str
+    WS_SV_API_URL: str
+    WS_SV_API_KEY: str
+    EMAIL_TOKEN_TTL_MINUTES: int = 15
+    INTEGRATIONS_STUB: bool = False
     SUPPORT_URL: str | None = None
     RATE_LIMIT: int | float = 0.5  # for throttling control
+    FORTUNE_APP_URL: str = "https://fortunewheelsinglefile.netlify.app/"
 
 
 class DBSettings(EnvBaseSettings):
