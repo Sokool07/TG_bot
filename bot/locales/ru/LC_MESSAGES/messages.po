@@ -52,6 +52,10 @@ msgstr "Info"
 msgid "fortune button"
 msgstr "🎡 Открыть колесо фортуны"
 
+#: bot/keyboards/inline/menu.py:18 bot/handlers/notcoin.py:12
+msgid "notcoin button"
+msgstr "🚀 Запустить NotCoin"
+
 #: bot/middlewares/auth.py:41
 msgid "first message"
 msgstr ""
@@ -62,6 +66,10 @@ msgstr ""
 #: bot/handlers/fortune.py:16
 msgid "fortune description"
 msgstr "Запусти колесо фортуны в браузере и попробуй выиграть моментальные призы."
+
+#: bot/handlers/notcoin.py:16
+msgid "notcoin description"
+msgstr "Открой мини-приложение NotCoin и начни собирать монеты."
 
 #: bot/handlers/onboarding.py:24
 msgid "onboarding_welcome"

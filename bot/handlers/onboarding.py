@@ -10,6 +10,7 @@ from aiogram.types import CallbackQuery, Message
 from aiogram.utils.i18n import gettext as _
 
 from bot.core.config import settings
+from bot.keyboards.inline.menu import main_keyboard
 from bot.keyboards.inline.onboarding import CHECK_CALLBACK_DATA, build_subscription_keyboard
 from bot.services.analytics import analytics
 from bot.services.onboarding import BonusGrantResult, confirm_token, grant_bonus, start_linking
@@ -138,6 +139,7 @@ async def process_check_subscription(callback: CallbackQuery, state: FSMContext)
 
     if result.success:
         await callback.message.answer(_("onboarding_bonus_success"))
+        await callback.message.answer(_("title main keyboard"), reply_markup=main_keyboard())
     else:
         message_key = "onboarding_requirements_failed" if result.reason == "requirements" else "onboarding_bonus_failure"
         await callback.message.answer(_(message_key))

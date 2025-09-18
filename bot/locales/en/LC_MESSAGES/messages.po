@@ -49,6 +49,10 @@ msgstr "Info"
 msgid "fortune button"
 msgstr "🎡 Open Fortune Wheel"
 
+#: bot/keyboards/inline/menu.py:18 bot/handlers/notcoin.py:12
+msgid "notcoin button"
+msgstr "🚀 Launch NotCoin"
+
 #: bot/middlewares/auth.py:41
 msgid "first message"
 msgstr ""
@@ -59,6 +63,10 @@ msgstr ""
 #: bot/handlers/fortune.py:16
 msgid "fortune description"
 msgstr "Spin the Fortune Wheel and win instant rewards in the browser."
+
+#: bot/handlers/notcoin.py:16
+msgid "notcoin description"
+msgstr "Open the NotCoin mini app and start tapping for coins."
 
 #: bot/handlers/onboarding.py:24
 msgid "onboarding_welcome"

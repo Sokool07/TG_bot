@@ -46,6 +46,7 @@ class BotSettings(WebhookSettings):
     SUPPORT_URL: str | None = None
     RATE_LIMIT: int | float = 0.5  # for throttling control
     FORTUNE_APP_URL: str = "https://fortunewheelsinglefile.netlify.app/"
+    NOTCOIN_APP_URL: str = "https://example.com/notcoin/"
 
 
 class DBSettings(EnvBaseSettings):

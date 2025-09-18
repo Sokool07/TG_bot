@@ -17,6 +17,7 @@
 - **Кэширование** - система кэширования с использованием Redis
 - **Валидация данных** - удобная валидация с помощью Pydantic V2
 - **Интернационализация** - поддержка множественных языков через Babel
+- **Telegram mini-apps** - Fortune Wheel WebApp и встроенный NotCoin Mini App clone (маршрут `/notcoin/`)
 
 ## 🚀 Запуск проекта
 
@@ -59,6 +60,23 @@
     uv run alembic upgrade head
     ```
 
+### 🎮 Telegram mini-apps
+
+- Fortune Wheel открывается через WebApp по адресу из `FORTUNE_APP_URL` (по умолчанию используется готовый хостинг). Убедитесь, что домен указан в `t.me/botfather` → `Web App`.
+- NotCoin mini-app находится в каталоге `webapps/notcoin` и автоматически раздаётся сервисом админ-панели по пути `/notcoin/`. Чтобы обновить сборку:
+
+    ```bash
+    cd webapps/notcoin
+    npm install
+    npm run build
+    ```
+
+  После деплоя пропишите домен в BotFather и задайте переменную окружения `NOTCOIN_APP_URL`, например:
+
+    ```env
+    NOTCOIN_APP_URL="https://your-domain/notcoin/"
+    ```
+
 ## 🌍 Environment variables
 
 to launch the bot you only need a token bot, database and redis settings, everything else can be left out
@@ -88,6 +106,8 @@ to launch the bot you only need a token bot, database and redis settings, everyt
 | `REDIS_HOST`             | Hostname or IP address of the Redis database                                                |
 | `REDIS_PORT`             | Port number for the Redis database                                                          |
 | `REDIS_PASS`             | Password for authenticating with the Redis database                                         |
+| `FORTUNE_APP_URL`        | URL that opens the Fortune Wheel WebApp                                                     |
+| `NOTCOIN_APP_URL`        | URL that opens the NotCoin Mini App                                                         |
 | `SENTRY_DSN`             | Sentry DSN (Data Source Name) for error tracking                                            |
 | `AMPLITUDE_API_KEY`      | API key for Amplitude analytics                                                             |
 | `POSTHOG_API_KEY`        | API key for PostHog analytics                                                               |
@@ -147,6 +167,9 @@ default, so the panels begin to populate as soon as Prometheus scrapes `/metrics
 │   ├── env.py               # Настройка окружения для Alembic
 │   ├── script.py.mako       # Шаблон скрипта для генерации миграций
 │   └── versions/            # Папка с отдельными скриптами миграций
+│
+├── webapps/                 # Веб-приложения для Telegram WebApp
+│   └── notcoin/             # Исходники и сборка NotCoin mini-app (Vite + React)
 │
 ├── configs/                 # Конфигурации мониторинга
 │   ├── grafana/             # Конфигурационные файлы Grafana

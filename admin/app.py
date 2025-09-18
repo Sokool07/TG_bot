@@ -1,9 +1,10 @@
 # ruff: noqa: RUF012
 from __future__ import annotations
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
-from flask import Flask, abort, redirect, request, url_for
+from flask import Flask, abort, redirect, request, send_from_directory, url_for
 from flask_admin import Admin, AdminIndexView, expose, helpers
 from flask_admin.consts import ICON_TYPE_FONT_AWESOME
 from flask_admin.contrib.sqla import ModelView
@@ -30,6 +31,8 @@ app.config.from_pyfile("config.py")
 db = SQLAlchemy(app)
 cache = Cache(app)
 babel = Babel(app)
+
+NOTCOIN_DIST_DIR = Path(__file__).resolve().parent.parent / "webapps" / "notcoin" / "dist"
 
 # Define models
 roles_admins = db.Table(
@@ -162,6 +165,22 @@ class CustomAdminIndexView(AdminIndexView):
 @app.route("/")
 def index() -> Response:
     return redirect(url_for("admin.index"))
+
+
+@app.route("/notcoin/")
+def notcoin_index() -> Response:
+    if not NOTCOIN_DIST_DIR.exists():
+        abort(404)
+
+    return send_from_directory(NOTCOIN_DIST_DIR, "index.html")
+
+
+@app.route("/notcoin/<path:resource>")
+def notcoin_static(resource: str) -> Response:
+    if not NOTCOIN_DIST_DIR.exists():
+        abort(404)
+
+    return send_from_directory(NOTCOIN_DIST_DIR, resource)
 
 
 # Initializing the admin panel

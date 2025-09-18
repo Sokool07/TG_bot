@@ -1,6 +1,6 @@
 from aiogram import Router, types
 from aiogram.filters import Command
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 from aiogram.utils.i18n import gettext as _
 
 from bot.core.config import settings
@@ -9,7 +9,10 @@ router = Router(name="fortune")
 
 
 def _fortune_keyboard() -> InlineKeyboardMarkup:
-    button = InlineKeyboardButton(text=_("fortune button"), url=settings.FORTUNE_APP_URL)
+    button = InlineKeyboardButton(
+        text=_("fortune button"),
+        web_app=WebAppInfo(url=settings.FORTUNE_APP_URL),
+    )
     return InlineKeyboardMarkup(inline_keyboard=[[button]])
 
 
