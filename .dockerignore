@@ -9,4 +9,6 @@
 !/pyproject.toml
 !/uv.lock
 !/requirements.txt
+!/requirements.test.txt
 !/Dockerfile
+!/test_timeweb_app.py

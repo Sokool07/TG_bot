@@ -1,3 +1,5 @@
+# Оптимизированный Dockerfile для Timeweb Cloud
+# Основан на примере Flask приложения от Timeweb Cloud
 FROM python:3.11-slim
 
 # Устанавливаем системные зависимости
@@ -9,13 +11,13 @@ RUN apt-get update && apt-get install -y \
 # Устанавливаем рабочую директорию
 WORKDIR /app
 
-# Сначала копируем только requirements.txt для кэширования слоев
+# Копируем requirements.txt
 COPY requirements.txt .
 
 # Устанавливаем Python зависимости
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Затем копируем остальные файлы проекта
+# Копируем код приложения
 COPY . .
 
 # Компилируем локализацию

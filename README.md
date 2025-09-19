@@ -21,7 +21,18 @@
 
 ## 🚀 Запуск проекта
 
-### 🐳 Запуск в Docker (рекомендуемый способ)
+### ☁️ Развертывание на Timeweb Cloud (рекомендуемый способ)
+
+1. Подготовьте проект к развертыванию:
+   ```bash
+   ./scripts/prepare_timeweb_deploy.sh
+   ```
+
+2. Настройте переменные окружения в файле `.env.timeweb`
+
+3. Следуйте инструкции в [TIMEWEB_DEPLOYMENT.md](TIMEWEB_DEPLOYMENT.md)
+
+### 🐳 Запуск в Docker (локальная разработка)
 
 1. Настройте переменные окружения в файле `.env`
 2. Запустите все сервисы:
@@ -176,10 +187,15 @@ default, so the panels begin to populate as soon as Prometheus scrapes `/metrics
 │   └── prometheus/          # Конфигурационные файлы Prometheus
 │
 ├── scripts/                 # Вспомогательные скрипты
+│   └── prepare_timeweb_deploy.sh  # Скрипт подготовки к деплою на Timeweb Cloud
 ├── Makefile                 # Список команд для стандартных операций
 ├── alembic.ini              # Конфигурационный файл миграций
-├── docker-compose.yml       # Конфигурация Docker Compose
+├── docker-compose.yml       # Конфигурация Docker Compose (локальная разработка)
+├── docker-compose.timeweb.yml  # Конфигурация для Timeweb Cloud
 ├── Dockerfile               # Dockerfile для Telegram бота
+├── timeweb.env              # Переменные окружения для Timeweb Cloud
+├── timeweb-env-vars.txt     # Переменные для копирования в панель Timeweb Cloud
+├── TIMEWEB_DEPLOYMENT.md    # Инструкция по развертыванию на Timeweb Cloud
 ├── pyproject.toml           # Конфигурация Python проекта
 └── README.md                # Документация
 ```

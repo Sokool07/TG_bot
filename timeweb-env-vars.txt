@@ -1,0 +1,31 @@
+# Переменные окружения для Timeweb Cloud Apps
+# Скопируйте эти переменные в раздел "Переменные окружения" в панели Timeweb Cloud
+
+BOT_TOKEN=your_bot_token_here
+CHANNEL_ID=your_channel_id_here
+USE_WEBHOOK=true
+WEBHOOK_BASE_URL=https://your-app-name.timeweb.cloud
+WEBHOOK_SECRET=your_webhook_secret_here
+WEBHOOK_HOST=0.0.0.0
+WEBHOOK_PORT=8080
+DB_HOST=postgres
+DB_PORT=5432
+DB_USER=postgres
+DB_PASS=your_secure_password_here
+DB_NAME=tgbot
+REDIS_HOST=redis
+REDIS_PORT=6379
+REDIS_PASS=your_redis_password_here
+ADMIN_HOST=0.0.0.0
+ADMIN_PORT=5000
+DEFAULT_ADMIN_EMAIL=admin@yourdomain.com
+DEFAULT_ADMIN_PASSWORD=your_admin_password_here
+SECRET_KEY=your_secret_key_here
+DEBUG=false
+INTEGRATIONS_STUB=true
+RATE_LIMIT=0.5
+EMAIL_TOKEN_TTL_MINUTES=15
+FORTUNE_APP_URL=https://fortunewheelsinglefile.netlify.app/
+NOTCOIN_APP_URL=https://not-coin-mini-app.vercel.app/
+SENTRY_DSN=
+AMPLITUDE_API_KEY=
