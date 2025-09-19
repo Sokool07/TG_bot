@@ -1,7 +1,5 @@
 from __future__ import annotations
 import asyncio
-import signal
-import sys
 
 import sentry_sdk
 import uvloop
@@ -12,7 +10,7 @@ from bot.core.config import settings
 from bot.core.loader import app, bot, dp
 from bot.database.migrations import run_migrations
 from bot.handlers import get_handlers_router
-from bot.handlers.metrics import MetricsView, HealthView
+from bot.handlers.metrics import MetricsView
 from bot.keyboards.default_commands import remove_default_commands, set_default_commands
 from bot.middlewares import register_middlewares
 from bot.middlewares.prometheus import prometheus_middleware_factory
@@ -25,9 +23,6 @@ async def on_startup() -> None:
 
     dp.include_router(get_handlers_router())
 
-    # Добавляем healthcheck endpoint для мониторинга в любом режиме
-    app.router.add_route("GET", "/health", HealthView)
-    
     if settings.USE_WEBHOOK:
         app.middlewares.append(prometheus_middleware_factory())
         app.router.add_route("GET", "/metrics", MetricsView)
@@ -65,17 +60,6 @@ async def on_shutdown() -> None:
     await bot.session.close()
 
     logger.info("bot stopped")
-
-
-def setup_signal_handlers() -> None:
-    """Настройка обработчиков сигналов для graceful shutdown"""
-    
-    def signal_handler(signum: int, frame) -> None:
-        logger.info(f"Получен сигнал {signum}, начинаем graceful shutdown...")
-        sys.exit(0)
-    
-    signal.signal(signal.SIGTERM, signal_handler)
-    signal.signal(signal.SIGINT, signal_handler)
 
 
 async def setup_webhook() -> None:
@@ -132,22 +116,9 @@ async def main() -> None:
     if settings.USE_WEBHOOK:
         await setup_webhook()
     else:
-        # Запускаем HTTP сервер для healthcheck даже в polling режиме
-        from aiohttp.web import AppRunner, TCPSite
-        runner = AppRunner(app)
-        await runner.setup()
-        site = TCPSite(runner, host="0.0.0.0", port=8080)
-        await site.start()
-        
-        # Запускаем polling в фоне
-        import asyncio
-        asyncio.create_task(dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types()))
-        
-        # Ждем бесконечно
-        await asyncio.Event().wait()
+        await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
 
 
 if __name__ == "__main__":
-    setup_signal_handlers()
     run_migrations()
     uvloop.run(main())

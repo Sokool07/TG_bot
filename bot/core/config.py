@@ -19,11 +19,11 @@ class EnvBaseSettings(BaseSettings):
 
 
 class WebhookSettings(EnvBaseSettings):
-    USE_WEBHOOK: bool = True  # По умолчанию используем webhook для продакшена
+    USE_WEBHOOK: bool = False
     WEBHOOK_BASE_URL: str = "https://xxx.ngrok-free.app"
     WEBHOOK_PATH: str = "/webhook"
     WEBHOOK_SECRET: str = ""
-    WEBHOOK_HOST: str = "0.0.0.0"  # Слушаем на всех интерфейсах для Docker
+    WEBHOOK_HOST: str = "localhost"
     WEBHOOK_PORT: int = 8080
 
     @property
