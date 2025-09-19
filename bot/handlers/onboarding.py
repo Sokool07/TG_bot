@@ -1,12 +1,10 @@
 from __future__ import annotations
-
 import time
+from typing import TYPE_CHECKING
 
 from aiogram import F, Router
 from aiogram.exceptions import TelegramBadRequest
 from aiogram.filters import Command, CommandStart
-from aiogram.fsm.context import FSMContext
-from aiogram.types import CallbackQuery, Message
 from aiogram.utils.i18n import gettext as _
 
 from bot.core.config import settings
@@ -16,8 +14,15 @@ from bot.services.analytics import analytics
 from bot.services.onboarding import BonusGrantResult, confirm_token, grant_bonus, start_linking
 from bot.states.onboarding import OnboardingStates
 
+if TYPE_CHECKING:
+    from aiogram.fsm.context import FSMContext
+    from aiogram.types import CallbackQuery, Message
+
 router = Router(name="onboarding")
 THROTTLE_SECONDS = 10
+MIN_IDENTIFIER_LENGTH = 3
+MIN_TOKEN_LENGTH = 3
+MIN_NAME_LENGTH_FOR_MASKING = 2
 
 
 @router.message(CommandStart())
@@ -41,7 +46,7 @@ async def handle_cancel(message: Message, state: FSMContext) -> None:
 async def process_login(message: Message, state: FSMContext) -> None:
     identifier = (message.text or "").strip()
 
-    if len(identifier) < 3:
+    if len(identifier) < MIN_IDENTIFIER_LENGTH:
         await message.answer(_("onboarding_invalid_login"))
         return
 
@@ -74,7 +79,7 @@ async def process_login(message: Message, state: FSMContext) -> None:
 async def process_token(message: Message, state: FSMContext) -> None:
     token = (message.text or "").strip()
 
-    if len(token) < 3:
+    if len(token) < MIN_TOKEN_LENGTH:
         await message.answer(_("onboarding_token_invalid"))
         return
 
@@ -134,14 +139,17 @@ async def process_check_subscription(callback: CallbackQuery, state: FSMContext)
         await callback.message.answer(_("onboarding_service_error"))
         await state.clear()
         return
-    except Exception:
+    except Exception:  # noqa: BLE001
         result = BonusGrantResult(success=False)
 
     if result.success:
         await callback.message.answer(_("onboarding_bonus_success"))
         await callback.message.answer(_("title main keyboard"), reply_markup=main_keyboard())
     else:
-        message_key = "onboarding_requirements_failed" if result.reason == "requirements" else "onboarding_bonus_failure"
+        message_key = (
+            "onboarding_requirements_failed" if result.reason == "requirements"
+            else "onboarding_bonus_failure"
+        )
         await callback.message.answer(_(message_key))
 
     await state.set_state(OnboardingStates.done)
@@ -150,10 +158,7 @@ def _mask_email(email: str) -> str:
     if "@" not in email:
         return email
     name, domain = email.split("@", 1)
-    if len(name) <= 2:
-        masked = name[0] + "*"
-    else:
-        masked = name[0] + "*" * (len(name) - 2) + name[-1]
+    masked = name[0] + "*" if len(name) <= MIN_NAME_LENGTH_FOR_MASKING else name[0] + "*" * (len(name) - 2) + name[-1]
     return f"{masked}@{domain}"
 
 

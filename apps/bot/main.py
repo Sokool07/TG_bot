@@ -1,17 +1,19 @@
 from __future__ import annotations
-
 import asyncio
 from contextlib import suppress
+from typing import TYPE_CHECKING
 
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
 from aiogram.exceptions import TelegramRetryAfter
 from aiogram.filters import CommandStart
 from aiogram.fsm.storage.memory import MemoryStorage
-from aiogram.types import Message
+from apps.bot.i18n import Translator, get_locale
 
 from apps.bot.config import settings
-from apps.bot.i18n import Translator, get_locale
+
+if TYPE_CHECKING:
+    from aiogram.types import Message
 
 translator = Translator()
 
@@ -21,7 +23,7 @@ def create_dispatcher() -> Dispatcher:
     dp = Dispatcher(storage=storage)
 
     @dp.message(CommandStart())
-    async def handle_start(message: Message) -> None:  # noqa: D401
+    async def handle_start(message: Message) -> None:
         """Entry point for onboarding scenario."""
         locale = get_locale(message.from_user)
         text = translator.gettext("start.welcome", locale=locale)

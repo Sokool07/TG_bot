@@ -6,7 +6,7 @@ import sys
 import types
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Generic, TypeVar
+from typing import ClassVar, Generic, TypeVar
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
@@ -27,7 +27,7 @@ class _DeclarativeBase:  # pragma: no cover - stub class
     pass
 
 
-def _mapped_column(*args: object, **kwargs: object) -> None:  # pragma: no cover - stub function
+def _mapped_column(*args: object, **kwargs: object) -> None:  # pragma: no cover - stub function  # noqa: ARG001
     return None
 
 
@@ -66,7 +66,7 @@ class DummyColumn:
 
 
 class DummyUserModel:
-    column_names = [
+    column_names: ClassVar[list[str]] = [
         "id",
         "first_name",
         "last_name",

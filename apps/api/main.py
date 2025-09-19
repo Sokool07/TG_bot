@@ -1,5 +1,4 @@
 from __future__ import annotations
-
 from pathlib import Path
 
 from fastapi import FastAPI
@@ -7,7 +6,6 @@ from fastapi.staticfiles import StaticFiles
 from loguru import logger
 
 from apps.api.config import settings
-
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 NOTCOIN_DIST_DIR = BASE_DIR / "webapps" / "notcoin" / "dist"

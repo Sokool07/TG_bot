@@ -1,5 +1,4 @@
 from __future__ import annotations
-
 from dataclasses import dataclass
 
 from loguru import logger
@@ -29,7 +28,7 @@ async def start_linking(telegram_id: int, identifier: str) -> StartLinkingResult
     raise NotImplementedError
 
 
-async def confirm_token(telegram_id: int, token: str) -> str:
+async def confirm_token(telegram_id: int, token: str) -> str:  # noqa: ARG001
     """Validate token provided by user."""
     if settings.INTEGRATIONS_STUB:
         return f"casino-{telegram_id}"

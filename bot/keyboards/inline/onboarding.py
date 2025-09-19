@@ -1,5 +1,4 @@
 from __future__ import annotations
-
 from urllib.parse import quote
 
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
@@ -18,6 +17,5 @@ def build_subscription_keyboard(channel_id: str, subscribe_text: str, check_text
 
 def _channel_url(channel_id: str) -> str:
     clean_id = channel_id.strip()
-    if clean_id.startswith("@"):
-        clean_id = clean_id[1:]
+    clean_id = clean_id.removeprefix("@")
     return f"https://t.me/{quote(clean_id)}"

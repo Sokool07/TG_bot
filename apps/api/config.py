@@ -1,5 +1,4 @@
 from __future__ import annotations
-
 from functools import lru_cache
 
 from pydantic import BaseModel, Field, SecretStr
@@ -12,7 +11,7 @@ class ApiSettings(BaseSettings):
     app_name: str = Field(default="tg-onboarding-api", alias="APP_NAME")
     debug: bool = Field(default=False, alias="DEBUG")
 
-    api_host: str = Field(default="0.0.0.0", alias="API_HOST")
+    api_host: str = Field(default="localhost", alias="API_HOST")
     api_port: int = Field(default=8000, alias="API_PORT")
 
     db_url: SecretStr = Field(alias="DB_URL")

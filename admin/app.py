@@ -16,11 +16,11 @@ from flask_security.datastore import SQLAlchemyUserDatastore
 from flask_security.utils import hash_password
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import inspect
+from sqlalchemy.exc import SQLAlchemyError
 from wtforms import PasswordField
 
 from admin.views.users import UserView as AppUserView
 from bot.database.models import UserModel as AppUserModel
-from sqlalchemy.exc import SQLAlchemyError
 
 if TYPE_CHECKING:
     from werkzeug.wrappers.response import Response
