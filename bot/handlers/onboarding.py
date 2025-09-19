@@ -147,13 +147,14 @@ async def process_check_subscription(callback: CallbackQuery, state: FSMContext)
         await callback.message.answer(_("title main keyboard"), reply_markup=main_keyboard())
     else:
         message_key = (
-            "onboarding_requirements_failed" if result.reason == "requirements"
-            else "onboarding_bonus_failure"
+            "onboarding_requirements_failed" if result.reason == "requirements" else "onboarding_bonus_failure"
         )
         await callback.message.answer(_(message_key))
 
     await state.set_state(OnboardingStates.done)
     await state.clear()
+
+
 def _mask_email(email: str) -> str:
     if "@" not in email:
         return email
