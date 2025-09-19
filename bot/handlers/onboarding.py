@@ -44,6 +44,9 @@ async def handle_cancel(message: Message, state: FSMContext) -> None:
 
 @router.message(OnboardingStates.ask_login, F.text)
 async def process_login(message: Message, state: FSMContext) -> None:
+    if not message.from_user:
+        return
+        
     identifier = (message.text or "").strip()
 
     if len(identifier) < MIN_IDENTIFIER_LENGTH:
@@ -77,6 +80,9 @@ async def process_login(message: Message, state: FSMContext) -> None:
 
 @router.message(OnboardingStates.wait_email_code, F.text)
 async def process_token(message: Message, state: FSMContext) -> None:
+    if not message.from_user:
+        return
+        
     token = (message.text or "").strip()
 
     if len(token) < MIN_TOKEN_LENGTH:
@@ -107,6 +113,9 @@ async def process_token(message: Message, state: FSMContext) -> None:
 
 @router.callback_query(OnboardingStates.check_channel, F.data == CHECK_CALLBACK_DATA)
 async def process_check_subscription(callback: CallbackQuery, state: FSMContext) -> None:
+    if not callback.message or not callback.from_user:
+        return
+        
     await callback.answer()
 
     data = await state.get_data()
@@ -166,6 +175,9 @@ def _mask_email(email: str) -> str:
 async def _is_member(callback: CallbackQuery, user_id: int) -> bool:
     if settings.INTEGRATIONS_STUB:
         return True
+
+    if not callback.message or not callback.message.bot:
+        return False
 
     try:
         member = await callback.message.bot.get_chat_member(settings.CHANNEL_ID, user_id)
