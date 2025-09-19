@@ -1,0 +1,30 @@
+# Bot Configuration
+BOT_TOKEN=5741540814:AAFuPSnI2PGD72rkvD2OTSuQH5ciEfWMUwE
+CHANNEL_ID=your_channel_id_here
+
+# Webhook Configuration for Timeweb Cloud
+USE_WEBHOOK=true
+WEBHOOK_BASE_URL=https://your-app-name.timeweb.cloud
+WEBHOOK_SECRET=your_webhook_secret_here
+
+# Database Configuration (Timeweb Cloud Internal DB)
+DB_HOST=your_internal_db_host
+DB_PORT=5432
+DB_USER=your_db_user
+DB_PASS=your_db_password
+DB_NAME=your_db_name
+
+# Redis Configuration (Timeweb Cloud Internal Redis)
+REDIS_HOST=your_internal_redis_host
+REDIS_PORT=6379
+REDIS_PASS=your_redis_password
+
+# Optional Settings
+DEBUG=false
+INTEGRATIONS_STUB=true
+RATE_LIMIT=0.5
+EMAIL_TOKEN_TTL_MINUTES=15
+
+# Miniapp URLs (keep these external)
+FORTUNE_APP_URL=https://weel-zeta.vercel.app/
+NOTCOIN_APP_URL=https://not-coin-mini-app.vercel.app/

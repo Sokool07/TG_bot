@@ -4,7 +4,6 @@ from typing import TYPE_CHECKING, Any, TypeVar
 
 from aiogram.types import CallbackQuery, Message
 
-from bot.analytics.amplitude import AmplitudeTelegramLogger
 from bot.analytics.types import AbstractAnalyticsLogger, BaseEvent, EventProperties, EventType, UserProperties
 from bot.core.config import settings
 from bot.utils.singleton import SingletonMeta
@@ -99,6 +98,7 @@ class AnalyticsService(metaclass=SingletonMeta):
         return decorator
 
 
-logger = AmplitudeTelegramLogger(api_token=settings.AMPLITUDE_API_KEY) if settings.AMPLITUDE_API_KEY else None
+# Отключаем внешнюю аналитику для Timeweb Cloud
+logger = None
 
 analytics = AnalyticsService(logger)

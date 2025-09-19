@@ -19,38 +19,36 @@ class EnvBaseSettings(BaseSettings):
 
 
 class WebhookSettings(EnvBaseSettings):
-    USE_WEBHOOK: bool = False
-    WEBHOOK_BASE_URL: str = "https://xxx.ngrok-free.app"
+    USE_WEBHOOK: bool = True  # Включаем webhook для Timeweb Cloud
+    WEBHOOK_BASE_URL: str = ""  # Будет установлен через переменные окружения
     WEBHOOK_PATH: str = "/webhook"
     WEBHOOK_SECRET: str = ""
-    WEBHOOK_HOST: str = "localhost"
-    WEBHOOK_PORT: int = 8080
+    WEBHOOK_HOST: str = "0.0.0.0"  # Слушаем все интерфейсы
+    WEBHOOK_PORT: int = 8080  # Порт для Timeweb Cloud
 
     @property
     def webhook_url(self) -> str:
-        if settings.USE_WEBHOOK:
+        if settings.USE_WEBHOOK and self.WEBHOOK_BASE_URL:
             return f"{self.WEBHOOK_BASE_URL}{self.WEBHOOK_PATH}"
-        return f"http://localhost:{settings.WEBHOOK_PORT}{settings.WEBHOOK_PATH}"
+        return f"http://{self.WEBHOOK_HOST}:{self.WEBHOOK_PORT}{self.WEBHOOK_PATH}"
 
 
 class BotSettings(WebhookSettings):
     BOT_TOKEN: str
     CHANNEL_ID: str
-    CUSTOMERIO_API_KEY: str
-    GBL_BONUS_API_URL: str
-    GBL_BONUS_API_KEY: str
-    WS_SV_API_URL: str
-    WS_SV_API_KEY: str
+    # Удаляем внешние API для Timeweb Cloud
     EMAIL_TOKEN_TTL_MINUTES: int = 15
-    INTEGRATIONS_STUB: bool = False
+    INTEGRATIONS_STUB: bool = True  # Включаем заглушки
     SUPPORT_URL: str | None = None
     RATE_LIMIT: int | float = 0.5  # for throttling control
+    # Оставляем только miniapp
     FORTUNE_APP_URL: str = "https://fortunewheelsinglefile.netlify.app/"
-    NOTCOIN_APP_URL: str = "https://example.com/notcoin/"
+    NOTCOIN_APP_URL: str = "https://not-coin-mini-app.vercel.app/"
 
 
 class DBSettings(EnvBaseSettings):
-    DB_HOST: str = "postgres"
+    # Настройки для внутренней БД Timeweb Cloud
+    DB_HOST: str = "localhost"  # Будет заменено на внутренний хост Timeweb Cloud
     DB_PORT: int = 5432
     DB_USER: str = "postgres"
     DB_PASS: str | None = None
@@ -70,7 +68,8 @@ class DBSettings(EnvBaseSettings):
 
 
 class CacheSettings(EnvBaseSettings):
-    REDIS_HOST: str = "redis"
+    # Настройки для внутреннего Redis Timeweb Cloud
+    REDIS_HOST: str = "localhost"  # Будет заменено на внутренний хост Timeweb Cloud
     REDIS_PORT: int = 6379
     REDIS_PASS: str | None = None
 
@@ -89,9 +88,9 @@ class CacheSettings(EnvBaseSettings):
 class Settings(BotSettings, DBSettings, CacheSettings):
     DEBUG: bool = False
 
+    # Отключаем внешние сервисы для Timeweb Cloud
     SENTRY_DSN: str | None = None
-
-    AMPLITUDE_API_KEY: str  # or for example it could be POSTHOG_API_KEY
+    AMPLITUDE_API_KEY: str | None = None  # Отключаем аналитику
 
 
 settings = Settings()

@@ -1,19 +1,34 @@
-FROM ghcr.io/astral-sh/uv:0.5-python3.13-alpine
+FROM python:3.11-slim
 
-ENV UV_COMPILE_BYTECODE=1 \
-    UV_LINK_MODE=copy \
-    PATH="/usr/src/app/.venv/bin:$PATH"
+# Устанавливаем системные зависимости
+RUN apt-get update && apt-get install -y \
+    gcc \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /usr/src/app
+# Устанавливаем рабочую директорию
+WORKDIR /app
 
+# Сначала копируем только requirements.txt для кэширования слоев
+COPY requirements.txt .
+
+# Устанавливаем Python зависимости
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Затем копируем остальные файлы проекта
 COPY . .
 
-RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --frozen --no-install-project --group bot --no-group admin --no-group dev \
-    && pybabel compile -d ./bot/locales \
-    && adduser -D appuser \
-    && chown -R appuser:appuser .
+# Компилируем локализацию
+RUN pybabel compile -d ./bot/locales
+
+# Создаем пользователя для безопасности
+RUN adduser --disabled-password --gecos '' appuser && \
+    chown -R appuser:appuser /app
 
 USER appuser
 
+# Открываем порт для Timeweb Cloud
+EXPOSE 8080
+
+# Запускаем бота
 CMD ["python", "-m", "bot"]
